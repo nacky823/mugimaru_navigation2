@@ -32,20 +32,20 @@ def generate_launch_description():
     )
 
     lifecycle_nodes=[
-        'nav2_map_server',
-        'nav2_controller_server',
-        'nav2_smoother_server',
-        'nav2_planner_server',
-        'nav2_behavior_server',
-        'nav2_bt_navigator',
-        'nav2_waypoint_follower',
-        'nav2_velocity_smoother',
+        'map_server',
+        'controller_server',
+        'smoother_server',
+        'planner_server',
+        'behavior_server',
+        'bt_navigator',
+        'waypoint_follower',
+        'velocity_smoother',
     ]
 
     map_server=ComposableNode(
         package='nav2_map_server',
         plugin='nav2_map_server::MapServer',
-        name='nav2_map_server',
+        name='map_server',
         parameters=[
             param_path,
             {
@@ -57,7 +57,7 @@ def generate_launch_description():
     controller_server=ComposableNode(
         package='nav2_controller',
         plugin='nav2_controller::ControllerServer',
-        name='nav2_controller_server',
+        name='controller_server',
         parameters=[
             param_path,
             {'use_sim_time': use_sim_time},
@@ -67,7 +67,7 @@ def generate_launch_description():
     smoother_server=ComposableNode(
         package='nav2_smoother',
         plugin='nav2_smoother::SmootherServer',
-        name='nav2_smoother_server',
+        name='smoother_server',
         parameters=[
             param_path,
             {'use_sim_time': use_sim_time},
@@ -76,7 +76,7 @@ def generate_launch_description():
     planner_server=ComposableNode(
         package='nav2_planner',
         plugin='nav2_planner::PlannerServer',
-        name='nav2_planner_server',
+        name='planner_server',
         parameters=[
             param_path,
             {'use_sim_time': use_sim_time},
@@ -85,7 +85,7 @@ def generate_launch_description():
     behavior_server=ComposableNode(
         package='nav2_behaviors',
         plugin='behavior_server::BehaviorServer',
-        name='nav2_behavior_server',
+        name='behavior_server',
         parameters=[
             param_path,
             {'use_sim_time': use_sim_time},
@@ -94,7 +94,7 @@ def generate_launch_description():
     bt_navigator=ComposableNode(
         package='nav2_bt_navigator',
         plugin='nav2_bt_navigator::BtNavigator',
-        name='nav2_bt_navigator',
+        name='bt_navigator',
         parameters=[
             param_path,
             {'use_sim_time': use_sim_time},
@@ -103,7 +103,7 @@ def generate_launch_description():
     waypoint_follower=ComposableNode(
         package='nav2_waypoint_follower',
         plugin='nav2_waypoint_follower::WaypointFollower',
-        name='nav2_waypoint_follower',
+        name='waypoint_follower',
         parameters=[
             param_path,
             {'use_sim_time': use_sim_time},
@@ -112,7 +112,7 @@ def generate_launch_description():
     velocity_smoother=ComposableNode(
         package='nav2_velocity_smoother',
         plugin='nav2_velocity_smoother::VelocitySmoother',
-        name='nav2_velocity_smoother',
+        name='velocity_smoother',
         parameters=[
             param_path,
             {'use_sim_time': use_sim_time},
