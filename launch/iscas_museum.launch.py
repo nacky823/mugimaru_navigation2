@@ -40,28 +40,23 @@ def generate_launch_description():
         'waypoint_follower',
         'velocity_smoother',
     ]
+    param_list=[
+        param_path,
+        {'use_sim_time': use_sim_time},
+    ]
 
     map_server=Node(
         package='nav2_map_server',
         executable='map_server',
         name='map_server',
-        parameters=[
-            param_path,
-            {
-                'use_sim_time': use_sim_time,
-                'yaml_filename': map_path,
-            },
-        ],
+        parameters=param_list + [{'yaml_filename': map_path}],
         output='screen',
     )
     controller_server=Node(
         package='nav2_controller',
         executable='controller_server',
         name='controller_server',
-        parameters=[
-            param_path,
-            {'use_sim_time': use_sim_time},
-        ],
+        parameters=param_list,
         remappings=[('cmd_vel', 'cmd_vel_nav')],
         output='screen',
     )
@@ -69,60 +64,42 @@ def generate_launch_description():
         package='nav2_smoother',
         executable='smoother_server',
         name='smoother_server',
-        parameters=[
-            param_path,
-            {'use_sim_time': use_sim_time},
-        ],
+        parameters=param_list,
         output='screen',
     )
     planner_server=Node(
         package='nav2_planner',
         executable='planner_server',
         name='planner_server',
-        parameters=[
-            param_path,
-            {'use_sim_time': use_sim_time},
-        ],
+        parameters=param_list,
         output='screen',
     )
     behavior_server=Node(
         package='nav2_behaviors',
         executable='behavior_server',
         name='behavior_server',
-        parameters=[
-            param_path,
-            {'use_sim_time': use_sim_time},
-        ],
+        parameters=param_list,
         output='screen',
     )
     bt_navigator=Node(
         package='nav2_bt_navigator',
         executable='bt_navigator',
         name='bt_navigator',
-        parameters=[
-            param_path,
-            {'use_sim_time': use_sim_time},
-        ],
+        parameters=param_list,
         output='screen',
     )
     waypoint_follower=Node(
         package='nav2_waypoint_follower',
         executable='waypoint_follower',
         name='waypoint_follower',
-        parameters=[
-            param_path,
-            {'use_sim_time': use_sim_time},
-        ],
+        parameters=param_list,
         output='screen',
     )
     velocity_smoother=Node(
         package='nav2_velocity_smoother',
         executable='velocity_smoother',
         name='velocity_smoother',
-        parameters=[
-            param_path,
-            {'use_sim_time': use_sim_time},
-        ],
+        parameters=param_list,
         remappings=[
             ('cmd_vel', 'cmd_vel_nav'),
             ('cmd_vel_smoothed', 'cmd_vel'),
@@ -133,13 +110,9 @@ def generate_launch_description():
         package='nav2_lifecycle_manager',
         executable='lifecycle_manager',
         name='lifecycle_manager_navigation',
-        parameters=[
-            param_path,
-            {
-                'use_sim_time': use_sim_time,
-                'autostart': autostart,
-                'node_names': lifecycle_nodes,
-            },
+        parameters=param_list + [
+            {'autostart': autostart},
+            {'node_names': lifecycle_nodes},
         ],
         output='screen',
     )
