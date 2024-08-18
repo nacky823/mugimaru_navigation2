@@ -2,22 +2,32 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import os
-from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
 
-    map_path=os.path.join(
+    default_map_path=os.path.join(
         os.path.expanduser('~'), 'maps', 'iscas_museum', 'iscas_museum_2d.yaml'
     )
-    param_path=os.path.join(
-        get_package_share_directory('mugimaru_navigation2'),
-        'config', 'iscas_museum.param.yaml'
+    map_path=LaunchConfiguration('map_path')
+    declare_map_path=DeclareLaunchArgument(
+        'map_path',
+        default_value=default_map_path,
     )
+
+    param_file_name=LaunchConfiguration('param_file_name')
+    declare_param_file_name=DeclareLaunchArgument(
+        'param_file_name',
+        default_value='iscas_museum.param.yaml',
+    )
+    param_path=PathJoinSubstitution([
+        FindPackageShare('mugimaru_navigation2'), 'config', param_file_name
+    ])
 
     use_sim_time=LaunchConfiguration('use_sim_time')
     declare_use_sim_time=DeclareLaunchArgument(
@@ -119,6 +129,8 @@ def generate_launch_description():
 
     ld=LaunchDescription()
 
+    ld.add_action(declare_map_path)
+    ld.add_action(declare_param_file_name)
     ld.add_action(declare_use_sim_time)
     ld.add_action(declare_autostart)
 
